@@ -6,7 +6,7 @@ fun main() {
 
 
     //Perfiles precargados
-    var users: MutableList<PerfilUsuario> = mutableListOf()
+    val users: MutableList<PerfilUsuario> = mutableListOf()
     users.add(PerfilUsuario(1,"Diego","Leiva","thisurl.com",22,"lei21752@uvg.edu.gt","esta es la bio", state = State.Activo))
     users.add(PerfilUsuario(2, "Maria", "Gomez", "mariaurl.com", 25, "maria123@email.com", "Hola, soy Maria", state=State.Inactivo))
     users.add(PerfilUsuario(3, "Juan", "Perez", "juanurl.com", 30, "juan45@gmail.com", "Mi nombre es Juan", state=State.Pendiente))
@@ -15,7 +15,7 @@ fun main() {
     //Menu de opciones
     println("Bienvenido")
     while (true){
-        println("Selecciona una opción:")
+        println("\nSelecciona una opción:")
         println("1. Crear perfil")
         println("2. Buscar perfil de usuario")
         println("3. Eliminar perfil")
@@ -52,8 +52,60 @@ fun main() {
  * @param profiles, el listado con todos los perfiles de usuario
  */
 fun newProfile(profiles: MutableList<PerfilUsuario>) {
+    println("\n[Crear nuevo perfil]")
+    var id: Int?
+    do {
+        print("ID: ")
+        id = readlnOrNull()?.toIntOrNull()
+    } while (id == null || profiles.any { it.id == id })
 
+    var name: String?
+    do {
+        print("Nombre: ")
+        name = readlnOrNull()
+    } while (name.isNullOrEmpty())
+
+    var lastname: String?
+    do {
+        print("Apellido: ")
+        lastname = readlnOrNull()
+    } while (lastname.isNullOrEmpty())
+
+    print("URL foto: ")
+    val url = readlnOrNull()
+
+    var age: Int?
+    do {
+        print("Edad: ")
+        age = readlnOrNull()?.toIntOrNull()
+    } while (age == null)
+
+    var email: String?
+    do {
+        print("Correo: ")
+        email = readlnOrNull()
+    } while (email.isNullOrEmpty())
+
+    print("Biografia: ")
+    val bio = readlnOrNull()
+
+    var state: State?
+    do {
+        print("Estado [Activo, Pendiente, Inactivo]: ")
+        state = try {
+            State.valueOf(readlnOrNull().toString())
+        } catch (e: IllegalArgumentException) {
+            null
+        }
+    } while (state == null)
+
+    val hobbies = mutableListOf<Hobby>()
+    val newUser = PerfilUsuario(id, name, lastname, url, age, email, bio, state, hobbies)
+    profiles.add(newUser)
+    println("Perfil creado exitosamente!")
 }
+
+
 
 
 /**
@@ -61,7 +113,7 @@ fun newProfile(profiles: MutableList<PerfilUsuario>) {
  * @param profiles, el listado con todos los perfiles de usuario
  */
 fun searchProfile(profiles: MutableList<PerfilUsuario>) {
-    println("[Buscar perfil]")
+    println("\n[Buscar perfil]")
     print("Ingresa ID o el nombre y apellido: ")
     val search = readlnOrNull()
 
@@ -91,7 +143,7 @@ fun searchProfile(profiles: MutableList<PerfilUsuario>) {
  * @param profiles, el listado con todos los perfiles de usuario
  */
 fun deleteProfile(profiles: MutableList<PerfilUsuario>) {
-    println("[Eliminar perfil]")
+    println("\n[Eliminar perfil]")
     print("Ingresa el ID del perfil que quieres eliminar: ")
 
     // si la conversion a entero no funciona devuelve null
@@ -111,7 +163,7 @@ fun deleteProfile(profiles: MutableList<PerfilUsuario>) {
  * @param profiles, el listado con todos los perfiles de usuario
  */
 fun addHobby(profiles: MutableList<PerfilUsuario>) {
-    println("[Agregar hobby a un perfil]")
+    println("\n[Agregar hobby a un perfil]")
     print("Ingresa el ID o nombre y apellido del perfil al que quieres agregar un hobby: ")
     val search = readlnOrNull()
 
@@ -124,13 +176,13 @@ fun addHobby(profiles: MutableList<PerfilUsuario>) {
         println("No se encontró el perfil")
     } else {
         for (user in results) {
-            var title: String? = null
+            var title: String?
             do {
                 print("Título del hobby: ")
                 title = readlnOrNull()
             } while (title.isNullOrEmpty())
 
-            var description: String? = null
+            var description: String?
             do {
                 print("Descripción del hobby: ")
                 description = readlnOrNull()
@@ -139,7 +191,7 @@ fun addHobby(profiles: MutableList<PerfilUsuario>) {
             print("URL foto del hobby (puede ser nulo): ")
             val url = readlnOrNull()
 
-            user.AgregarHobby(Hobby(title, description, url))
+            user.agregarHobby(Hobby(title, description, url))
             println("Hobby agregado exitosamente!")
         }
     }

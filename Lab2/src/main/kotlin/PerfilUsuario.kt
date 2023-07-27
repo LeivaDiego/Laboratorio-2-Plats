@@ -10,7 +10,7 @@ class PerfilUsuario(
     var state: State,
     var hobbies: MutableList<Hobby> = mutableListOf()
 ) {
-    fun AgregarHobby(hobby: Hobby){
+    fun agregarHobby(hobby: Hobby){
         hobbies.add(hobby)
     }
 }
