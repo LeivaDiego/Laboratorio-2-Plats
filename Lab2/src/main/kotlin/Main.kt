@@ -93,7 +93,10 @@ fun searchProfile(profiles: MutableList<PerfilUsuario>) {
 fun deleteProfile(profiles: MutableList<PerfilUsuario>) {
     println("[Eliminar perfil]")
     print("Ingresa el ID del perfil que quieres eliminar: ")
+
+    // si la conversion a entero no funciona devuelve null
     val id = readlnOrNull()?.toIntOrNull()
+
     val user = profiles.find { it.id == id }
     if (user != null) {
         profiles.remove(user)
@@ -108,5 +111,38 @@ fun deleteProfile(profiles: MutableList<PerfilUsuario>) {
  * @param profiles, el listado con todos los perfiles de usuario
  */
 fun addHobby(profiles: MutableList<PerfilUsuario>) {
+    println("[Agregar hobby a un perfil]")
+    print("Ingresa el ID o nombre y apellido del perfil al que quieres agregar un hobby: ")
+    val search = readlnOrNull()
 
+    val results = when (val toIntOrNull = search?.toIntOrNull()) {
+        null -> profiles.filter { (it.name + " " + it.lastname) == search }
+        else -> profiles.filter { it.id == toIntOrNull }
+    }
+
+    if (results.isEmpty()) {
+        println("No se encontró el perfil")
+    } else {
+        for (user in results) {
+            var title: String? = null
+            do {
+                print("Título del hobby: ")
+                title = readlnOrNull()
+            } while (title.isNullOrEmpty())
+
+            var description: String? = null
+            do {
+                print("Descripción del hobby: ")
+                description = readlnOrNull()
+            } while (description.isNullOrEmpty())
+
+            print("URL foto del hobby (puede ser nulo): ")
+            val url = readlnOrNull()
+
+            user.AgregarHobby(Hobby(title, description, url))
+            println("Hobby agregado exitosamente!")
+        }
+    }
 }
+
+
