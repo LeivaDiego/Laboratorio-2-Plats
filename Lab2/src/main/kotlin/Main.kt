@@ -12,6 +12,9 @@ fun main() {
     users.add(PerfilUsuario(3, "Juan", "Perez", "juanurl.com", 30, "juan45@gmail.com", "Mi nombre es Juan", state=State.Pendiente))
     users.add(PerfilUsuario(4, "Ana", "Lopez", "anaurl.com", 28, "ana_lopez@yahoo.com", "Soy Ana y me gusta la música", state=State.Activo))
 
+    users[0].hobbies.add(Hobby("Dibujar","Descripcion del hobby", "hobby.com"))
+    users[0].hobbies.add(Hobby("Cocinar","Descripcion del hobby 2", "hobby2.com"))
+
     //Menu de opciones
     println("Bienvenido")
     while (true){
@@ -132,7 +135,21 @@ fun searchProfile(profiles: MutableList<PerfilUsuario>) {
         println("No se encontró el perfil")
     } else {
         for (user in results) {
-            println("ID: ${user.id}, Nombre: ${user.name}, Apellido: ${user.lastname}, URL: ${user.url}, Edad: ${user.age}, Correo: ${user.email}, Biografia: ${user.bio}, Estado: ${user.state}, Hobbies: ${user.hobbies.joinToString(", ") { it.title }}")
+            println("\nID: ${user.id}")
+            println("Nombre: ${user.name}")
+            println("Apellido: ${user.lastname}")
+            println("URL: ${user.url}")
+            println("Edad: ${user.age}")
+            println("Correo: ${user.email}")
+            println("Biografia: ${user.bio}")
+            println("Estado: ${user.state}")
+            println("Hobbies:")
+            user.hobbies.forEach { hobby ->
+                println("\tTítulo: ${hobby.title}")
+                println("\tDescripción: ${hobby.description}")
+                println("\tURL: ${hobby.url}")
+                println()
+            }
         }
     }
 }
