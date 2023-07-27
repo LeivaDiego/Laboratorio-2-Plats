@@ -8,6 +8,9 @@ class PerfilUsuario(
     var email: String,
     var bio: String,
     var state: State,
-    var hobbies: MutableList<Hobby>
+    var hobbies: MutableList<Hobby> = mutableListOf()
 ) {
+    fun AgregarHobby(hobby: Hobby){
+        hobbies.add(hobby)
+    }
 }
