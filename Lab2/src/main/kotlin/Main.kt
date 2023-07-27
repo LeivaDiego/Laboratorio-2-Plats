@@ -91,7 +91,16 @@ fun searchProfile(profiles: MutableList<PerfilUsuario>) {
  * @param profiles, el listado con todos los perfiles de usuario
  */
 fun deleteProfile(profiles: MutableList<PerfilUsuario>) {
-
+    println("[Eliminar perfil]")
+    print("Ingresa el ID del perfil que quieres eliminar: ")
+    val id = readlnOrNull()?.toIntOrNull()
+    val user = profiles.find { it.id == id }
+    if (user != null) {
+        profiles.remove(user)
+        println("Perfil eliminado exitosamente!")
+    } else {
+        println("No se encontró el perfil con el ID ingresado")
+    }
 }
 
 /**
